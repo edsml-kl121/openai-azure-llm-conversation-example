@@ -2,7 +2,9 @@ from pathlib import Path
 from openai import AzureOpenAI
 from dotenv import load_dotenv
 import os
+import time
 
+start = time.time()
 load_dotenv()
 
 endpoint = os.getenv("AZURE_ENDPOINT")
@@ -40,3 +42,6 @@ Make the delivery sound like a real person, not a text-to-speech engine.
     # instructions="""Speak in a cheerful and positive tone.""",
 ) as response:
     response.stream_to_file(speech_file_path)
+
+end = time.time()
+print(f"Time taken: {end - start} seconds")

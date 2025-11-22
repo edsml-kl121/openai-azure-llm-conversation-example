@@ -1,18 +1,23 @@
 from openai import AzureOpenAI
 from dotenv import load_dotenv
 import os
+import time
+
 
 load_dotenv()
+start = time.time()
 
 print("AZURE FILE: ")
 endpoint = os.getenv("AZURE_ENDPOINT")
-deployment_name = "gpt-4o"
+# deployment_name = "gpt-4o"
+deployment_name = "gpt-4.1" # Choose either 4o or 4.1
 api_key = os.getenv("AZURE_API_KEY")
 
 client = AzureOpenAI(
     azure_endpoint=endpoint,
     api_key=api_key,
     api_version="2024-10-01-preview"
+    # api_version="2025-04-14-preview"
 )
 
 completion = client.chat.completions.create(
@@ -225,4 +230,9 @@ You exist to turn each visitor’s hopes into something real they can explore at
     ],
 )
 
-print(completion.choices[0].message)
+print(completion.choices[0].message.content)
+print(len(completion.choices[0].message.content))
+
+end = time.time()
+
+print(end-start)
